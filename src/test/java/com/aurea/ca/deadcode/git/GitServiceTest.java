@@ -2,12 +2,10 @@ package com.aurea.ca.deadcode.git;
 
 import com.aurea.ca.deadcode.CaDeadcodeApplicationTests;
 import com.aurea.ca.deadcode.utilities.FileUtilities;
-import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
 
@@ -23,6 +21,9 @@ public class GitServiceTest extends CaDeadcodeApplicationTests {
 
 
     @Autowired
+    private FileUtilities fileUtilities;
+
+    @Autowired
     private GitService gitService;
 
     @Test
@@ -31,11 +32,11 @@ public class GitServiceTest extends CaDeadcodeApplicationTests {
         String testRepositoryName = "testrepo";
         //When
 
-        File clonedRepository = gitService.clone(testRepoUrl, testRepositoryName);
+        File clonedRepository = gitService.clone(testRepoUrl);
         //Then
         assertTrue("Failed to clone !- folder does not exist", clonedRepository.exists());
         //tear down
-        FileUtilities.deleteFolder(clonedRepository);
+        fileUtilities.deleteFolder(clonedRepository);
     }
 
 

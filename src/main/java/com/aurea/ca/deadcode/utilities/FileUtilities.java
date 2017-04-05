@@ -1,23 +1,25 @@
 package com.aurea.ca.deadcode.utilities;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
 
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by ameen on 05/04/17.
  */
-
+@Component
 public class FileUtilities {
 
-    public static void deleteFolder(File folder) {
-        assertTrue("failed to clean the folder", FileSystemUtils.deleteRecursively(folder));
+    public void deleteFolder(File folder) {
+        assert FileSystemUtils.deleteRecursively(folder);
     }
 
     //url/repositorname.git
-    public static String extractRepositoryName(String testRepositoryUrl) {
-        return null;
+    public String extractRepositoryName(String testRepositoryUrl) {
+        String[] urlParts = testRepositoryUrl.split("/");
+
+        return urlParts[urlParts.length - 1].split(".git")[0];
     }
 }
