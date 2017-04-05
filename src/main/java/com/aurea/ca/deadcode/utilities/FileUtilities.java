@@ -15,4 +15,9 @@ public class FileUtilities {
     public static void deleteFolder(File folder) {
         assertTrue("failed to clean the folder", FileSystemUtils.deleteRecursively(folder));
     }
+
+    //url/repositorname.git
+    public static String extractRepositoryName(String testRepositoryUrl) {
+        return null;
+    }
 }
