@@ -1,6 +1,7 @@
 package com.aurea.ca.deadcode.git;
 
 import com.aurea.ca.deadcode.CaDeadcodeApplicationTests;
+import com.aurea.ca.deadcode.utilities.FileUtilities;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.Test;
@@ -30,11 +31,11 @@ public class GitServiceTest extends CaDeadcodeApplicationTests {
         String testRepositoryName = "testrepo";
         //When
 
-        File clonedRepository = gitService.clone(testRepoUrl,testRepositoryName);
+        File clonedRepository = gitService.clone(testRepoUrl, testRepositoryName);
         //Then
         assertTrue("Failed to clone !- folder does not exist", clonedRepository.exists());
         //tear down
-        assertTrue("failed to clean the folder", FileSystemUtils.deleteRecursively(clonedRepository));
+        FileUtilities.deleteFolder(clonedRepository);
     }
 
 
