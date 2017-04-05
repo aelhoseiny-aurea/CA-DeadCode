@@ -14,6 +14,8 @@ spring:
 understand:
   bin:
     dir: /home/ameen/aurea/projects/CATask/scitools/bin/linux64/
+  database:
+    dir: /home/ameen/aurea/projects/CATask/understand_dbs
 
 logging:
   level:
