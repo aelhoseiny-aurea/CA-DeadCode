@@ -1,7 +1,7 @@
 
 git:
   clone:
-    path: ./repos
+    path: repos
 
 test:
    git:

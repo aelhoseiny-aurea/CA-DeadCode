@@ -17,10 +17,12 @@ public class CmdWrapper {
     private static Logger logger = LoggerFactory.getLogger(CmdWrapper.class);
 
     public Process exec(String command) throws IOException, InterruptedException, CouldNotExecuteUnderstandCommand {
-        logger.debug(command);
+        logger.info(command);
         Runtime rt = Runtime.getRuntime();
         Process process = rt.exec(command);
         process.waitFor();
+        String output = IOUtils.toString(process.getInputStream());
+        logger.info(output);
         if (process.exitValue() != 0) {
             String errorMessage = IOUtils.toString(process.getErrorStream());
             logger.error(errorMessage);

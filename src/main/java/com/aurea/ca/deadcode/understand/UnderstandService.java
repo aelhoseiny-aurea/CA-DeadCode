@@ -34,9 +34,17 @@ public class UnderstandService {
     }
 
 
-    public void addRepository(File dbFile, File repositoryFolder, Languages java) throws IOException, InterruptedException, CouldNotExecuteUnderstandCommand {
-        String databaseLocation = understandDbLocation + "/" + repositoryFolder.getName() + ".udb";
+    public void addRepository(String dbName, File repositoryFolder, Languages java)
+        throws IOException, InterruptedException, CouldNotExecuteUnderstandCommand {
+        String databaseLocation = understandDbLocation + "/" + dbName;
         String command = understandCommand + " add " + repositoryFolder.getAbsolutePath() + " " + databaseLocation;
         cmd.exec(command);
+    }
+
+    public void analysis(String dbName) throws InterruptedException, IOException, CouldNotExecuteUnderstandCommand {
+        String databaseLocation = understandDbLocation + "/" + dbName;
+        String command = understandCommand + " analyze " + databaseLocation;
+        cmd.exec(command);
+
     }
 }
