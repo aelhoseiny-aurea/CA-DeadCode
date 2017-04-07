@@ -1,4 +1,3 @@
-
 git:
   clone:
     path: repos
@@ -7,15 +6,21 @@ test:
    git:
     test_repo:
       url: https://github.com/aelhoseiny-aurea/testrepository.git
+#      url: https://github.com/aelhoseiny-aurea/CA-DeadCode.git
 spring:
   datasource:
     url: jdbc:h2:mem:AZ;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
 
 understand:
   bin:
-    dir: /home/ameen/aurea/projects/CATask/scitools/bin/linux64/
+    dir: /home/ameen/aurea/projects/CATask/scitools/bin/linux64
   database:
     dir: /home/ameen/aurea/projects/CATask/understand_dbs
+  python:
+    scripts:
+      dir: /home/ameen/aurea/projects/CATask/ca-deadcode/src/main/python
+    bin:
+      dir: /usr/bin/python3
 
 logging:
   level:

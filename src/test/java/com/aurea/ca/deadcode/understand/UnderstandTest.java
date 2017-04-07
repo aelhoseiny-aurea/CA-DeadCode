@@ -1,10 +1,11 @@
 package com.aurea.ca.deadcode.understand;
 
 import com.aurea.ca.deadcode.CaDeadcodeApplicationTests;
-import com.aurea.ca.deadcode.git.GitService;
 import com.aurea.ca.deadcode.understand.exceptions.CouldNotExecuteUnderstandCommand;
 import com.aurea.ca.deadcode.utilities.FileUtilities;
+import com.aurea.ca.deadcode.utilities.TestRepositoryStageBuilder;
 import com.scitools.understand.Understand;
+import com.scitools.understand.UnderstandException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -26,8 +28,9 @@ public class UnderstandTest extends CaDeadcodeApplicationTests {
     @Autowired
     private UnderstandService understandService;
 
+
     @Autowired
-    private GitService gitService;
+    private TestRepositoryStageBuilder testRepositoryStageBuilder;
 
     @Value("${test.git.test_repo.url}")
     private String testRepositoryUrl;
@@ -50,36 +53,25 @@ public class UnderstandTest extends CaDeadcodeApplicationTests {
     public void testCreateDbAddAnalyseUnderstandSuccess() throws IOException, InterruptedException, GitAPIException, CouldNotExecuteUnderstandCommand {
         //Given the repository folder is testRepositoryUrl:
         //And the repository was cloned suucessfully
-        File dbFile = loadTestProject();
+        File dbFile = testRepositoryStageBuilder.loadTestProject();
         //the und analysis
         understandService.analysis(dbFile.getName());
         //Then
         //Tear down
-        fileUtilities.deleteFolder(new File(testRepositoryDir));
         fileUtilities.deleteFolder(dbFile);
     }
 
+//    enum Kinds{
+//        Package,Parameter,Public Class,Public Static Method,Variable,Unresolved Type,File
+//    }
+
     @Test
-    public void testGetAllEntities() throws InterruptedException, CouldNotExecuteUnderstandCommand, GitAPIException, IOException {
-        File dbFile = loadTestProject();
-
-
+    public void testGetAllVariablesReferences() throws InterruptedException, CouldNotExecuteUnderstandCommand, GitAPIException, IOException, UnderstandException {
+        Understand.loadNativeLibrary();
+        File dbFile = testRepositoryStageBuilder.loadTestProject();
+        understandService.analysis(dbFile.getName());
+        List<VariableReference> allVariablesReferences = understandService.getVariablesReferences(dbFile.getName());
     }
 
-    private File loadTestProject() throws InterruptedException, IOException, CouldNotExecuteUnderstandCommand, GitAPIException {
-        File[] files = new File(testRepositoryDir).listFiles();
-        if (files != null) {
-            for (File file :
-                files) {
-                fileUtilities.deleteFolder(file);
-            }
-        }
-        File repositoryFolder = gitService.clone(testRepositoryUrl);
-        //When the und create called
-        File dbFile = understandService.createDataBase(repositoryFolder.getName(), Languages.JAVA);
-        //And the und add
-        understandService.addRepository(dbFile.getName(), repositoryFolder, Languages.JAVA);
-        return dbFile;
-    }
 
 }

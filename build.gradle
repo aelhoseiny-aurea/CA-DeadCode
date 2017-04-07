@@ -27,11 +27,11 @@ repositories {
 
 dependencies {
 //	compile('org.flywaydb:flyway-core')
-    compile('org.springframework.boot:spring-boot-starter-jersey')
-    compile('org.springframework.boot:spring-boot-starter-security')
+//    compile('org.springframework.boot:spring-boot-starter-jersey')
+//    compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
-    runtime('com.h2database:h2')
+//    runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
 
     compile('org.eclipse.jgit:org.eclipse.jgit:2.2.0.201212191850-r')
@@ -40,4 +40,7 @@ dependencies {
 
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+tasks.withType(Test) {
+    systemProperty "java.library.path", "/home/ameen/aurea/projects/CATask/scitools/bin/linux64/"
 }
