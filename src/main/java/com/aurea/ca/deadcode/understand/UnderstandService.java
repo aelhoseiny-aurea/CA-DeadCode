@@ -1,8 +1,10 @@
 package com.aurea.ca.deadcode.understand;
 
+import com.aurea.ca.deadcode.project.Project;
 import com.aurea.ca.deadcode.understand.exceptions.CouldNotExecuteUnderstandCommand;
 import com.aurea.ca.deadcode.understand.runtime.CmdWrapper;
 import com.aurea.ca.deadcode.understand.runtime.ProcessOutput;
+import com.aurea.ca.deadcode.utilities.FileUtilities;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class UnderstandService {
     @Value("${understand.python.scripts.dir}/understand_variables.py")
     private String getVariablesDataScript;
 
+    @Autowired
+    private FileUtilities fileUtilities;
 
     @Autowired
     private CmdWrapper cmd;
@@ -79,5 +83,15 @@ public class UnderstandService {
         }
 
         return allVariablesReferences;
+    }
+
+    public void populateDeadCode(Project project)
+        throws InterruptedException, IOException, CouldNotExecuteUnderstandCommand {
+        File database = this.createDataBase(project.getName(), project.getLanguage());
+        this.addRepository(database.getName(), fileUtilities.getRepositoryFolder(project.getName()),
+            project.getLanguage());
+        String dataBaseName = fileUtilities.getDataBaseName(project.getName());
+        this.analysis(dataBaseName);
+        this.getVariablesReferences(dataBaseName);
     }
 }

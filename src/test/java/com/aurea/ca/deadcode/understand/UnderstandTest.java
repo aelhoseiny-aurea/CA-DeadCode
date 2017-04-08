@@ -35,9 +35,6 @@ public class UnderstandTest extends CaDeadcodeApplicationTests {
     @Value("${test.git.test_repo.url}")
     private String testRepositoryUrl;
 
-    @Value("${git.clone.path}")
-    private String testRepositoryDir;
-
 
     @Test
     public void testCreateDbUnderstandSuccess() throws IOException, InterruptedException, CouldNotExecuteUnderstandCommand {

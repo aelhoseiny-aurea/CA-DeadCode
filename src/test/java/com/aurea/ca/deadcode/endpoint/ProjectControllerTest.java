@@ -47,6 +47,5 @@ public class ProjectControllerTest extends CaDeadcodeApplicationTests {
             equalTo(ProjectStatus.PROCESSING));
         assertThat(actualProjectDtoResponseEntity.getBody().getName(),
             equalTo(fileUtilities.extractRepositoryName(testRepoUrl)));
-
     }
 }

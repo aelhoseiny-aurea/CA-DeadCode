@@ -30,9 +30,6 @@ public class TestRepositoryStageBuilder {
     @Value("${test.git.test_repo.url}")
     private String testRepositoryUrl;
 
-    @Value("${git.clone.path}")
-    private String testRepositoryDir;
-
     private File dbFile;
     private File repositoryFolder;
 
@@ -47,13 +44,15 @@ public class TestRepositoryStageBuilder {
         return this;
     }
 
-    public TestRepositoryStageBuilder createDB() throws GitAPIException, InterruptedException, IOException, CouldNotExecuteUnderstandCommand {
+    public TestRepositoryStageBuilder createDB()
+        throws GitAPIException, InterruptedException, IOException, CouldNotExecuteUnderstandCommand {
         assert repositoryFolder != null;
         dbFile = understandService.createDataBase(repositoryFolder.getName(), Languages.JAVA);
         return this;
     }
 
-    public TestRepositoryStageBuilder addRepoToDB() throws GitAPIException, InterruptedException, IOException, CouldNotExecuteUnderstandCommand {
+    public TestRepositoryStageBuilder addRepoToDB()
+        throws GitAPIException, InterruptedException, IOException, CouldNotExecuteUnderstandCommand {
         assert repositoryFolder != null;
         assert dbFile != null;
         understandService.addRepository(dbFile.getName(), repositoryFolder, Languages.JAVA);

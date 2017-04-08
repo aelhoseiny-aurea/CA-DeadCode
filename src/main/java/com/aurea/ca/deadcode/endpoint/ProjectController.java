@@ -1,9 +1,10 @@
 package com.aurea.ca.deadcode.endpoint;
 
 import com.aurea.ca.deadcode.project.AddRepositoryRequest;
-import com.aurea.ca.deadcode.project.ProjectService;
 import com.aurea.ca.deadcode.project.ProjectDto;
+import com.aurea.ca.deadcode.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +20,8 @@ public class ProjectController {
     private ProjectService projectService;
 
     @RequestMapping(value = "/project/repository/add", method = RequestMethod.POST)
-    public ProjectDto addRepository(@RequestBody AddRepositoryRequest addRepositoryRequest) {
-       return projectService.addRepository(addRepositoryRequest);
+    public ProjectDto addRepository(@Validated @RequestBody AddRepositoryRequest addRepositoryRequest) {
+        return projectService.addRepository(addRepositoryRequest);
 
     }
 }

@@ -1,5 +1,7 @@
 package com.aurea.ca.deadcode.project;
 
+import com.aurea.ca.deadcode.reactive.EventsPublisher;
+import com.aurea.ca.deadcode.reactive.events.NewProjectEvent;
 import com.aurea.ca.deadcode.utilities.FileUtilities;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +20,9 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private EventsPublisher eventsPublisher;
+
 
     public ProjectDto addRepository(AddRepositoryRequest addRepositoryRequest) {
         //create new project
@@ -26,11 +31,16 @@ public class ProjectService {
         project.setName(fileUtilities.extractRepositoryName(addRepositoryRequest.getUrl()));
         project.setLanguage(addRepositoryRequest.getLanguage());
         project.setStatus(ProjectStatus.PROCESSING);
-        project = projectRepository.save(project);
+        project = save(project);
         //publish NEW REPOISTORY EVENT
+        eventsPublisher.publish(new NewProjectEvent(project));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.convertValue(project, ProjectDto.class);
+    }
+
+    public Project save(Project project) {
+        return projectRepository.save(project);
     }
 }
