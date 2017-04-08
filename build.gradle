@@ -29,7 +29,10 @@ repositories {
     maven { url "http://repo.spring.io/release" }
 
 }
-
+docker{
+    baseImage = 'aurea-training-aelhoseiny/deadcode'
+    maintainer = 'ameen elhoseiny ""ameen.elhoseiny@aurea.com"'
+}
 
 task buildDocker(type: Docker, dependsOn: build) {
     push = false

@@ -16,6 +16,7 @@ import reactor.bus.Event;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * Created by ameen on 08/04/17.
@@ -41,11 +42,14 @@ public class NewProjectConsumer implements DeadCodeConsumer<Event<NewProjectEven
         try {
             File repository = gitService.clone(project.getGitUrl());
             understandService.populateDeadCode(project);
+            project.setStatus(ProjectStatus.COMPLETED);
 
         } catch (GitAPIException | InterruptedException | CouldNotExecuteUnderstandCommand | IOException e) {
             log.error("failed to process new project", e);
             project.setStatus(ProjectStatus.FAILED);
+            project.setError(e.getMessage());
         } finally {
+            project.setCompleteProcessingDate(Calendar.getInstance().getTime());
             projectService.save(project);
         }
 

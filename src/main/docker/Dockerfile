@@ -10,7 +10,7 @@ RUN apt-get install oracle-java8-installer -y --force-yes
 RUN apt-get install oracle-java8-set-default
 
 #install Understand
-RUN wget http://builds.scitools.com/all_builds/b885/Understand/Understand-4.0.844-Linux-64bit.tgz && tar -xvzf Understand-4.0.844-Linux-64bit.tgz
+RUN wget wget http://builds.scitools.com/all_builds/b844/Understand/Understand-4.0.844-Linux-64bit.tgz && tar -xvzf Understand-4.0.844-Linux-64bit.tgz
 RUN echo "Server: scitools-license.devfactory.com 00000000 9000" >scitools/conf/locallicense.dat
 
 #configure dependencies as in the training video
@@ -25,11 +25,10 @@ RUN apt-get install awscli -y
 
 # Configure  env
 RUN mkdir app
+VOLUME /tmp
 COPY ca-deadcode-0.0.1-SNAPSHOT.jar /app/api.jar
 
-VOLUME /tmp
-ADD gs-spring-boot-docker-0.1.0.jar app.jar
-RUN sh -c 'touch /app.jar'
+RUN sh -c 'touch /app/app.jar'
 ENV JAVA_OPTS=""
 EXPOSE 80 8080
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/urandom -jar /app/api.jar" ]

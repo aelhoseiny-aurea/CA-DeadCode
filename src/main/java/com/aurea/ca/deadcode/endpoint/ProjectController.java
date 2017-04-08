@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by ameen on 07/04/17.
  */
@@ -22,6 +24,11 @@ public class ProjectController {
     @RequestMapping(value = "/project/repository/add", method = RequestMethod.POST)
     public ProjectDto addRepository(@Validated @RequestBody AddRepositoryRequest addRepositoryRequest) {
         return projectService.addRepository(addRepositoryRequest);
+
+    }
+    @RequestMapping(value = "/project/list", method = RequestMethod.GET)
+    public List<ProjectDto> listAll() {
+        return projectService.getAllProjects();
 
     }
 }
