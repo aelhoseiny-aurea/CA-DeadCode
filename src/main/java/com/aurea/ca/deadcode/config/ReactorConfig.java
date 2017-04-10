@@ -1,4 +1,4 @@
-package com.aurea.ca.deadcode.confg;
+package com.aurea.ca.deadcode.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

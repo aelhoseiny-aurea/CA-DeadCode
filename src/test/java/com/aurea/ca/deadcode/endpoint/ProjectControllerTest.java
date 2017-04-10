@@ -54,7 +54,6 @@ public class ProjectControllerTest extends CaDeadcodeApplicationTests {
     @Test
     public void listRepositorySuccessfully() {
         //Given the project is added
-
         Integer sizeBeforeTest = testRestTemplate.getForEntity("/project/list", ProjectDto[].class).getBody().length;
         AddRepositoryRequest addRepositoryRequest = new AddRepositoryRequest();
         addRepositoryRequest.setLanguage(Languages.JAVA);
@@ -71,7 +70,8 @@ public class ProjectControllerTest extends CaDeadcodeApplicationTests {
         //When
         ResponseEntity<ProjectDto[]> projectsListResponse =
             testRestTemplate.getForEntity("/project/list", ProjectDto[].class);
-        assertThat(projectsListResponse.getBody().length, equalTo(sizeBeforeTest +1));
+        //Then
+        assertThat(projectsListResponse.getBody().length, equalTo(sizeBeforeTest + 1));
         assertThat(((ProjectDto) projectsListResponse.getBody()[0]).getName(),
             equalTo(fileUtilities.extractRepositoryName(testRepoUrl)));
 

@@ -1,4 +1,4 @@
-package com.aurea.ca.deadcode.confg;
+package com.aurea.ca.deadcode.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

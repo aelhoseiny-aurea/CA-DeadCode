@@ -10,7 +10,7 @@ RUN apt-get install oracle-java8-installer -y --force-yes
 RUN apt-get install oracle-java8-set-default
 
 #install Understand
-RUN wget wget http://builds.scitools.com/all_builds/b844/Understand/Understand-4.0.844-Linux-64bit.tgz && tar -xvzf Understand-4.0.844-Linux-64bit.tgz
+RUN wget http://builds.scitools.com/all_builds/b844/Understand/Understand-4.0.844-Linux-64bit.tgz && tar -xvzf Understand-4.0.844-Linux-64bit.tgz
 RUN echo "Server: scitools-license.devfactory.com 00000000 9000" >scitools/conf/locallicense.dat
 
 #configure dependencies as in the training video

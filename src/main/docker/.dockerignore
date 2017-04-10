@@ -1,0 +1,8 @@
+../../../build/classes/main
+**/tmp/**   
+**/reports/**
+**/test-results
+out/**
+repos/**
+src/**
+build/docker/**

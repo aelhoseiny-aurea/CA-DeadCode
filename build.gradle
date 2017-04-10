@@ -30,7 +30,7 @@ repositories {
 
 }
 docker{
-    baseImage = 'aurea-training-aelhoseiny/deadcode'
+    baseImage = 'deadcode-aelhoseiny'
     maintainer = 'ameen elhoseiny ""ameen.elhoseiny@aurea.com"'
 }
 
