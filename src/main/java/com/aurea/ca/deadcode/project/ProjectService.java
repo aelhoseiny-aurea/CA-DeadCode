@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class ProjectService {
 
+    public static final String THIS_GIT_URL_NEED_TO_BE_ADDED = "This Git URL need to be added.";
+    public static final String THIS_GIT_URL_IS_IN_PROCESSING_STILL = "This Git URL is in processing still.";
     @Autowired
     private FileUtilities fileUtilities;
 
@@ -63,15 +65,15 @@ public class ProjectService {
 
     public ProjectDeadCodeDto getProjectDeadCode(String url) {
         Project project = projectRepository.findByGitUrl(url);
-        Assert.notNull(project, "This Git URL need to be added.");
+        Assert.notNull(project, THIS_GIT_URL_NEED_TO_BE_ADDED);
         if (project.getStatus().equals(ProjectStatus.FAILED)) {
             throw new IllegalArgumentException("The project {" + project.getName() + "} couldn't be analyzed");
         }
-        Assert.isTrue(project.getStatus().equals(ProjectStatus.COMPLETED), "This Git URL need to be added.");
+        Assert.isTrue(project.getStatus().equals(ProjectStatus.COMPLETED), THIS_GIT_URL_IS_IN_PROCESSING_STILL);
         ProjectDeadCodeDto projectDeadCodeDto = new ProjectDeadCodeDto();
         projectDeadCodeDto.setDeadCodeEntities(convertValues(deadCodeEntityRepository.findByProject(project),
             DeadCodeEntityDto.class));
-        return null;
+        return projectDeadCodeDto;
     }
 
 

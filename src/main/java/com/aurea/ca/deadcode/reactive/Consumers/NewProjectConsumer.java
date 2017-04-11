@@ -23,7 +23,7 @@ import java.util.Calendar;
  */
 @Service
 @Slf4j
-public class NewProjectConsumer implements DeadCodeConsumer<Event<NewProjectEvent>> {
+public class NewProjectConsumer extends DeadCodeConsumer<Event<NewProjectEvent>> {
 
     @Autowired
     private GitService gitService;
@@ -35,7 +35,7 @@ public class NewProjectConsumer implements DeadCodeConsumer<Event<NewProjectEven
     private UnderstandService understandService;
 
     @Override
-    public void accept(Event<NewProjectEvent> newProjectEventEvent) {
+    public void execute(Event<NewProjectEvent> newProjectEventEvent) {
         Project project = newProjectEventEvent.getData().getProject();
         log.debug("new project event received project name:{}, project url:{}",
             project.getName(), project.getGitUrl());

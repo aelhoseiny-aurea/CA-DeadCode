@@ -10,6 +10,7 @@ import reactor.bus.EventBus;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.concurrent.Phaser;
 
 import static reactor.bus.selector.Selectors.$;
 
@@ -25,10 +26,12 @@ public class EventsPublisher {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+
     @PostConstruct
     public void registerConsumers() {
-        Collection<DeadCodeConsumer> deadCodeConsumers = webApplicationContext.getBeansOfType(DeadCodeConsumer.class).values();
+        Collection<? extends DeadCodeConsumer> deadCodeConsumers = webApplicationContext.getBeansOfType(DeadCodeConsumer.class).values();
         for (DeadCodeConsumer consumer : deadCodeConsumers) {
+
             eventBus.on($(consumer.getChannel()), consumer);
         }
     }

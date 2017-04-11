@@ -6,10 +6,7 @@ import com.aurea.ca.deadcode.project.ProjectService;
 import com.aurea.ca.deadcode.project.deadcode.ProjectDeadCodeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,8 +31,8 @@ public class ProjectController {
 
     }
 
-    @RequestMapping(value = "/project/repository/deadcode/get", method = RequestMethod.GET)
-    public ProjectDeadCodeDto getRepositoryDeadCode(@RequestBody String url) {
+    @RequestMapping(value = "/project/repository/dead-code/get", method = RequestMethod.GET)
+    public ProjectDeadCodeDto getRepositoryDeadCode(@RequestParam(value = "url") String url) {
         return projectService.getProjectDeadCode(url);
     }
 }

@@ -29,7 +29,7 @@ repositories {
     maven { url "http://repo.spring.io/release" }
 
 }
-docker{
+docker {
     baseImage = 'deadcode-aelhoseiny'
     maintainer = 'ameen elhoseiny ""ameen.elhoseiny@aurea.com"'
 }

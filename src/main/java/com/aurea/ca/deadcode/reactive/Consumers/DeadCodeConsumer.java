@@ -6,6 +6,16 @@ import reactor.fn.Consumer;
 /**
  * Created by ameen on 08/04/17.
  */
-public interface DeadCodeConsumer<T> extends Consumer<T> {
-    DeadCodeChannels getChannel();
+public abstract class DeadCodeConsumer<T> implements Consumer<T> {
+
+    public abstract DeadCodeChannels getChannel();
+
+    public abstract void execute(T t);
+
+
+    @Override
+    public void accept(T t) {
+        execute(t);
+
+    }
 }

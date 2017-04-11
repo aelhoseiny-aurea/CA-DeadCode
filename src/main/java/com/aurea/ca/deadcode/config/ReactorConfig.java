@@ -6,6 +6,8 @@ import reactor.Environment;
 import reactor.bus.EventBus;
 import reactor.spring.context.config.EnableReactor;
 
+import java.util.concurrent.Phaser;
+
 /**
  * Created by ameen on 08/04/17.
  */
@@ -22,4 +24,11 @@ public class ReactorConfig {
     EventBus createEventBus(Environment env) {
         return EventBus.create(env, Environment.THREAD_POOL);
     }
+
+    @Bean
+    Phaser phaser() {
+        return new Phaser(0);
+    }
+
+
 }
