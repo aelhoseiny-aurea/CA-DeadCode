@@ -7,6 +7,7 @@ import com.aurea.ca.deadcode.reactive.events.NewProjectEvent;
 import com.aurea.ca.deadcode.utilities.FileUtilities;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -19,10 +20,12 @@ import java.util.List;
  * Created by ameen on 07/04/17.
  */
 @Service
+@Slf4j
 public class ProjectService {
 
     public static final String THIS_GIT_URL_NEED_TO_BE_ADDED = "This Git URL need to be added.";
     public static final String THIS_GIT_URL_IS_IN_PROCESSING_STILL = "This Git URL is in processing still.";
+
     @Autowired
     private FileUtilities fileUtilities;
 
@@ -32,11 +35,12 @@ public class ProjectService {
     @Autowired
     private EventsPublisher eventsPublisher;
 
-    @Autowired
-    private ObjectMapper mapper;
 
     @Autowired
     private DeadCodeEntityRepository deadCodeEntityRepository;
+
+    @Autowired
+    private ObjectMapper mapper;
 
 
     public ProjectDto addRepository(AddRepositoryRequest addRepositoryRequest) {
@@ -55,7 +59,10 @@ public class ProjectService {
     }
 
     public Project save(Project project) {
-        return projectRepository.save(project);
+        projectRepository.findAll().forEach(p -> log.info("insave " + p.toString()));
+        project = projectRepository.save(project);
+        projectRepository.findAll().forEach(p -> log.info("outsave " + p.toString()));
+        return project;
     }
 
     public List<ProjectDto> getAllProjects() {
